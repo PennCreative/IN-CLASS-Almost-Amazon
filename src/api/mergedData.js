@@ -17,7 +17,7 @@ const viewAuthorDetails = (authorFirebaseKey) => new Promise((resolve, reject) =
     .then((authorObject) => {
       authorsBooks(authorObject)
         .then((bookObject) => {
-          resolve({ authorObject, bookObject });
+          resolve({ authorObject, ...bookObject });
         })
         .catch((error) => reject(error));
     });
