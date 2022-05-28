@@ -1,7 +1,9 @@
-import { deleteBook, updateBook } from '../../api/bookData';
+import { deleteBook, updateBook, authorsBooks } from '../../api/bookData';
 import { showBooks } from '../components/pages/books';
-import viewBookDetails from '../../api/mergedData';
+import { viewBookDetails, viewAuthorDetails } from '../../api/mergedData';
 import viewBook from '../components/pages/viewBook';
+import viewAuthor from '../components/pages/viewAuthor';
+import { updateAuthor } from '../../api/authorData';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -29,6 +31,12 @@ const domEvents = () => {
       const [, bookFirebaseKey] = e.target.id.split('--');
       viewBookDetails(bookFirebaseKey).then((bookAuthorObject) => viewBook(bookAuthorObject));
     }
+    // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
+    if (e.target.id.includes('view-author-btn')) {
+      const [, authorFirebaseKey] = e.target.id.split('--');
+      viewAuthorDetails(authorFirebaseKey).then((authorObject) => viewAuthor(authorObject));
+      authorsBooks(authorFirebaseKey).then((bookObject) => showBooks(bookObject));
+    }
 
     // FIXME: ADD CLICK EVENT FOR DELETING AN AUTHOR
     if (e.target.id.includes('delete-author-btn')) {
@@ -44,6 +52,11 @@ const domEvents = () => {
       console.warn('ADD AUTHOR');
     }
     // FIXME: ADD CLICK EVENT FOR EDITING AN AUTHOR
+    if (e.target.id.includes('edit-author-btn')) {
+      console.warn('ADD AUTHOR');
+      const [, firebaseKey] = e.target.id.split('--');
+      updateAuthor(firebaseKey).then((authorsArray) => showBooks(authorsArray));
+    }
   });
 };
 

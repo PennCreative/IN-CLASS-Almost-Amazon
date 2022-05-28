@@ -2,7 +2,7 @@ import signOut from '../helpers/auth/signOut';
 import { booksOnSale, getBooks } from '../../api/bookData';
 import { showBooks } from '../components/pages/books';
 import { showAuthors } from '../components/pages/authors';
-import { getAuthors } from '../../api/authorData';
+import { getAuthors, getFavAuthor } from '../../api/authorData';
 
 // navigation events
 const navigationEvents = () => {
@@ -18,6 +18,10 @@ const navigationEvents = () => {
   // TODO: ALL BOOKS
   document.querySelector('#all-books').addEventListener('click', () => {
     getBooks().then((booksArray) => showBooks(booksArray));
+  });
+  // TODO: FAVORITE Authors
+  document.querySelector('#favorite-authors').addEventListener('click', () => {
+    getFavAuthor().then((favoriteArray) => showAuthors(favoriteArray));
   });
 
   // FIXME: STUDENTS Create an event listener for the Authors
