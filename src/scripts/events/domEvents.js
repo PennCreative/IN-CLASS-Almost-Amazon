@@ -31,11 +31,11 @@ const domEvents = () => {
       const [, bookFirebaseKey] = e.target.id.split('--');
       viewBookDetails(bookFirebaseKey).then((bookAuthorObject) => viewBook(bookAuthorObject));
     }
-    // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
+    // TODO: CLICK EVENT FOR VIEW AUTHOR DETAILS
     if (e.target.id.includes('view-author-btn')) {
       const [, authorFirebaseKey] = e.target.id.split('--');
       viewAuthorDetails(authorFirebaseKey).then((authorObject) => viewAuthor(authorObject));
-      authorsBooks(authorFirebaseKey).then((bookObject) => showBooks(bookObject));
+      authorsBooks(authorFirebaseKey).then((bookObject) => viewBook(bookObject));
     }
 
     // FIXME: ADD CLICK EVENT FOR DELETING AN AUTHOR

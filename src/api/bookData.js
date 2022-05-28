@@ -46,7 +46,7 @@ const booksOnSale = () => new Promise((resolve, reject) => {
 // TODO: FILTER AUTHOR'S BOOKS
 const authorsBooks = (firebaseKey) => new Promise((resolve, reject) => {
   axios.get(`${dbUrl}/books.json?orderBy="author_id"&equalTo="${firebaseKey}"`)
-    .then((response) => resolve(Object.values(response.data)))
+    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 
