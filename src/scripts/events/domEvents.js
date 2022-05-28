@@ -1,9 +1,12 @@
-import { deleteBook, updateBook, authorsBooks } from '../../api/bookData';
+import { deleteBook, getSingleBook, authorsBooks } from '../../api/bookData';
 import { showBooks } from '../components/pages/books';
-import { viewBookDetails, viewAuthorDetails } from '../../api/mergedData';
+import { viewBookDetails, viewAuthorDetails, deleteAuthorsBooks } from '../../api/mergedData';
 import viewBook from '../components/pages/viewBook';
 import viewAuthor from '../components/pages/viewAuthor';
 import { updateAuthor } from '../../api/authorData';
+import { showAuthors } from '../components/pages/authors';
+import addBookForm from '../components/forms/addBookForm';
+import addAuthorForm from '../components/forms/addAuthorForm';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -19,12 +22,13 @@ const domEvents = () => {
     // TODO: CLICK EVENT FOR SHOWING FORM FOR ADDING A BOOK
     if (e.target.id.includes('add-book-btn')) {
       console.warn('ADD BOOK');
+      addBookForm();
     }
 
     // TODO: CLICK EVENT EDITING/UPDATING A BOOK
     if (e.target.id.includes('edit-book-btn')) {
       const [, firebaseKey] = e.target.id.split('--');
-      updateBook(firebaseKey).then((booksArray) => showBooks(booksArray));
+      getSingleBook(firebaseKey).then((bookObj) => addBookForm(bookObj));
     }
     // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
     if (e.target.id.includes('view-book-btn')) {
@@ -44,12 +48,17 @@ const domEvents = () => {
       if (window.confirm('Want to delete?')) {
         console.warn('DELETE AUTHOR', e.target.id);
         console.warn(e.target.id.split('--'));
+        const [, firebaseKey] = e.target.split('--');
+        console.warn(deleteAuthorsBooks);
+        console.warn(firebaseKey);
+        deleteAuthorsBooks(firebaseKey).then(showAuthors);
       }
     }
 
     // FIXME: ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('add-author-btn')) {
       console.warn('ADD AUTHOR');
+      addAuthorForm();
     }
     // FIXME: ADD CLICK EVENT FOR EDITING AN AUTHOR
     if (e.target.id.includes('edit-author-btn')) {
