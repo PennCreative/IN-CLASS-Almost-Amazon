@@ -1,5 +1,7 @@
 import { createBook, updateBook } from '../../api/bookData';
+import { createAuthor, updateAuthor } from '../../api/authorData';
 import { showBooks } from '../components/pages/books';
+import { showAuthors } from '../components/pages/authors';
 
 const formEvents = () => {
   document.querySelector('#main-container').addEventListener('submit', (e) => {
@@ -33,11 +35,25 @@ const formEvents = () => {
 
     // FIXME: ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('submit-author')) {
-      console.warn('CLICKED SUBMIT AUTHOR');
+      const authorObject = {
+        first_name: document.querySelector('#first_name').value,
+        last_name: document.querySelector('#last_name').value,
+        email: document.querySelector('#email').value
+      };
+      console.warn(authorObject);
+      createAuthor(authorObject).then((authorArray) => showAuthors(authorArray));
     }
     // FIXME:ADD CLICK EVENT FOR EDITING AN AUTHOR
     if (e.target.id.includes('update-author')) {
       console.warn('CLICKED EDIT AUTHOR');
+      const [, firebaseKey] = e.target.id.split('--');
+      const authorObject = {
+        first_name: document.querySelector('#first_name').value,
+        last_name: document.querySelector('#last_name').value,
+        email: document.querySelector('#email').value,
+        firebaseKey
+      };
+      updateAuthor(authorObject).then(showAuthors);
     }
   });
 };

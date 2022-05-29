@@ -12,7 +12,7 @@ const getAuthors = () => new Promise((resolve, reject) => {
 
 // FIXME: CREATE AUTHOR
 const createAuthor = (authorObj) => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/authors.json`, authorObj)
+  axios.post(`${dbUrl}/author.json`, authorObj)
     .then((response) => {
       // Remember to pass in a payload
       const authPayload = { firebaseKey: response.data.name };
@@ -40,9 +40,9 @@ const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // FIXME: UPDATE AUTHOR
-const updateAuthor = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.patch(`${dbUrl}/author/${firebaseKey}.json`)
-    .then((response) => resolve(response.data))
+const updateAuthor = (authorObject) => new Promise((resolve, reject) => {
+  axios.patch(`${dbUrl}/author/${authorObject.firebaseKey}.json`, authorObject)
+    .then(() => getAuthors().then(resolve))
     .catch((error) => reject(error));
 });
 
