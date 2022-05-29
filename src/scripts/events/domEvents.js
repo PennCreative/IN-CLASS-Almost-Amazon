@@ -3,7 +3,7 @@ import { showBooks } from '../components/pages/books';
 import { viewBookDetails, viewAuthorDetails, deleteAuthorsBooks } from '../../api/mergedData';
 import viewBook from '../components/pages/viewBook';
 import viewAuthor from '../components/pages/viewAuthor';
-import { updateAuthor } from '../../api/authorData';
+import { getSingleAuthor } from '../../api/authorData';
 import { showAuthors } from '../components/pages/authors';
 import addBookForm from '../components/forms/addBookForm';
 import addAuthorForm from '../components/forms/addAuthorForm';
@@ -21,7 +21,6 @@ const domEvents = () => {
 
     // TODO: CLICK EVENT FOR SHOWING FORM FOR ADDING A BOOK
     if (e.target.id.includes('add-book-btn')) {
-      console.warn('ADD BOOK');
       addBookForm();
     }
 
@@ -57,14 +56,12 @@ const domEvents = () => {
 
     // FIXME: ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('add-author-btn')) {
-      console.warn('ADD AUTHOR');
       addAuthorForm();
     }
     // FIXME: ADD CLICK EVENT FOR EDITING AN AUTHOR
     if (e.target.id.includes('edit-author-btn')) {
-      console.warn('ADD AUTHOR');
       const [, firebaseKey] = e.target.id.split('--');
-      updateAuthor(firebaseKey).then((authorsArray) => showBooks(authorsArray));
+      getSingleAuthor(firebaseKey).then((authorObj) => addAuthorForm(authorObj));
     }
   });
 };
