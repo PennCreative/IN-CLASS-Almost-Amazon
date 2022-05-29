@@ -26,7 +26,7 @@ const viewAuthor = (obj) => {
    </div>
     `;
   });
-  renderToDOM('#view', domString, bookStr);
+  renderToDOM('#view', domString);
   renderToDOM('#authorsCollection', bookStr);
 };
 

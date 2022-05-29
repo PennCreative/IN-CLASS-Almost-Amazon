@@ -15,6 +15,8 @@ const getBooks = () => new Promise((resolve, reject) => {
 const deleteBook = (firebaseKey) => new Promise((resolve, reject) => {
   axios.delete(`${dbUrl}/books/${firebaseKey}.json`)
     .then(() => {
+      // EXPECTING AN ARRAY BC SHOW BOOKS IN BOOKS.JS IS TELLING USING
+      // WE NEED TO PASS IN AN EMPTY ARRAY SO THAT THIS WON'T BREAK DUE TO NULL
       getBooks().then((booksArray) => resolve(booksArray));
     })
     .catch((error) => reject(error));
@@ -28,13 +30,25 @@ const getSingleBook = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // TODO: CREATE BOOK
-const createBook = () => {};
+const createBook = (bookObj) => new Promise((resolve, reject) => {
+  // PASSING IN PAYLOAD
+  axios.post(`${dbUrl}/books.json`, bookObj)
+    .then((response) => {
+    // Patch also needs a payload
+    // Patch is updating so it needs a payload
+      const bodyPayload = { firebaseKey: response.data.name };
+      axios.patch(`${dbUrl}/books/${bodyPayload.firebaseKey}.json`, bodyPayload)
+        .then(() => {
+          getBooks().then(resolve);
+        });
+    }).catch(reject);
+});
 
 // TODO: UPDATE BOOK
-const updateBook = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.patch(`${dbUrl}/books/${firebaseKey}.json`)
-    .then((response) => resolve(response.data))
-    .catch((error) => reject(error));
+const updateBook = (bookObj) => new Promise((resolve, reject) => {
+  axios.patch(`${dbUrl}/books/${bookObj.firebaseKey}.json`, bookObj)
+    .then(() => getBooks().then(resolve))
+    .catch(reject);
 });
 
 // TODO: FILTER BOOKS ON SALE
