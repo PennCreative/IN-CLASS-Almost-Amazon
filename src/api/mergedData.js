@@ -25,6 +25,7 @@ const viewAuthorDetails = (authorFirebaseKey) => new Promise((resolve, reject) =
 
 // We want to WAIT to for ALL books before we delete them.
 const deleteAuthorsBooks = (authorId) => new Promise((resolve, reject) => {
+  console.warn(authorId);
   getAuthorBooks(authorId).then((booksArray) => {
     const deleteBookPromises = booksArray.map((book) => deleteBook(book.firebaseKey));
     // Promise.all is expecting and ARRAY of Promises ^^^ from the .map above

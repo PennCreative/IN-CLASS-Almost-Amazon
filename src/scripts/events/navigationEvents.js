@@ -14,9 +14,13 @@ const navigationEvents = () => {
   document.querySelector('#sale-books').addEventListener('click', () => {
     booksOnSale().then((saleBooksArray) => showBooks(saleBooksArray));
   });
+  // GETTING 'AMAZON' TO RETURN TO 'HOMEPAGE'
+  document.querySelector('#homepage').addEventListener('click', () => {
+    getBooks().then((booksArray) => showBooks(booksArray));
+  });
 
   // TODO: ALL BOOKS
-  document.querySelector('#all-books').addEventListener('click', () => {
+  document.querySelector('#all-books' || '#homepage').addEventListener('click', () => {
     getBooks().then((booksArray) => showBooks(booksArray));
   });
   // TODO: FAVORITE Authors
