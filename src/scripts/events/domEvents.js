@@ -47,10 +47,9 @@ const domEvents = () => {
       if (window.confirm('Want to delete?')) {
         console.warn('DELETE AUTHOR', e.target.id);
         console.warn(e.target.id.split('--'));
-        const [, firebaseKey] = e.target.split('--');
-        console.warn(deleteAuthorsBooks);
+        const [, firebaseKey] = e.target.id.split('--');
         console.warn(firebaseKey);
-        deleteAuthorsBooks(firebaseKey).then(showAuthors);
+        deleteAuthorsBooks(firebaseKey).then((authorsArray) => showAuthors(authorsArray));
       }
     }
 
@@ -59,7 +58,7 @@ const domEvents = () => {
       addAuthorForm();
     }
     // FIXME: ADD CLICK EVENT FOR EDITING AN AUTHOR
-    if (e.target.id.includes('edit-author-btn')) {
+    if (e.target.id.includes('update-author')) {
       const [, firebaseKey] = e.target.id.split('--');
       getSingleAuthor(firebaseKey).then((authorObj) => addAuthorForm(authorObj));
     }
