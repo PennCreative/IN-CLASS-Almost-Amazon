@@ -5,27 +5,27 @@ import { showAuthors } from '../components/pages/authors';
 import { getAuthors, getFavAuthor } from '../../api/authorData';
 
 // navigation events
-const navigationEvents = () => {
+const navigationEvents = (uid) => {
   // LOGOUT BUTTON
   document.querySelector('#logout-button')
     .addEventListener('click', signOut);
 
   // TODO: BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
-    booksOnSale().then((saleBooksArray) => showBooks(saleBooksArray));
+    booksOnSale(uid).then((saleBooksArray) => showBooks(saleBooksArray));
   });
   // GETTING 'AMAZON' TO RETURN TO 'HOMEPAGE'
   document.querySelector('#homepage').addEventListener('click', () => {
-    getBooks().then((booksArray) => showBooks(booksArray));
+    getBooks(uid).then((booksArray) => showBooks(booksArray));
   });
 
   // TODO: ALL BOOKS
   document.querySelector('#all-books' || '#homepage').addEventListener('click', () => {
-    getBooks().then((booksArray) => showBooks(booksArray));
+    getBooks(uid).then((booksArray) => showBooks(booksArray));
   });
   // TODO: FAVORITE Authors
   document.querySelector('#favorite-authors').addEventListener('click', () => {
-    getFavAuthor().then((favoriteArray) => showAuthors(favoriteArray));
+    getFavAuthor(uid).then((favoriteArray) => showAuthors(favoriteArray));
   });
 
   // FIXME: STUDENTS Create an event listener for the Authors
@@ -33,7 +33,7 @@ const navigationEvents = () => {
   // 2. Convert the response to an array because that is what the makeAuthors function is expecting
   // 3. If the array is empty because there are no authors, make sure to use the emptyAuthor function
   document.querySelector('#authors').addEventListener('click', () => {
-    getAuthors().then((authorsArray) => showAuthors(authorsArray));
+    getAuthors(uid).then((authorsArray) => showAuthors(authorsArray));
   });
 
   // STRETCH: SEARCH

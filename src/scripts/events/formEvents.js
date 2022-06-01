@@ -3,7 +3,7 @@ import { createAuthor, updateAuthor } from '../../api/authorData';
 import { showBooks } from '../components/pages/books';
 import { showAuthors } from '../components/pages/authors';
 
-const formEvents = () => {
+const formEvents = (uid) => {
   document.querySelector('#main-container').addEventListener('submit', (e) => {
     e.preventDefault();
     // TODO: CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
@@ -15,8 +15,9 @@ const formEvents = () => {
         price: document.querySelector('#price').value,
         sale: document.querySelector('#sale').checked,
         author_id: document.querySelector('#author_id').value,
+        uid
       };
-      createBook(bookObject).then((booksArray) => showBooks(booksArray));
+      createBook(bookObject, uid).then((booksArray) => showBooks(booksArray));
     }
 
     // TODO: CLICK EVENT FOR EDITING A BOOK
@@ -28,9 +29,10 @@ const formEvents = () => {
         price: document.querySelector('#price').value,
         sale: document.querySelector('#sale').checked,
         author_id: document.querySelector('#author_id').value,
+        uid,
         firebaseKey
       };
-      updateBook(bookObject).then(showBooks);
+      updateBook(bookObject, uid).then(showBooks);
     }
 
     // FIXME: ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
@@ -39,11 +41,10 @@ const formEvents = () => {
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
         email: document.querySelector('#email').value,
-        uid: '',
-        favorite: document.querySelector('#favorite').checked
+        favorite: document.querySelector('#favorite').checked,
+        uid
       };
-      console.warn(authorObject);
-      createAuthor(authorObject).then((authorArray) => showAuthors(authorArray));
+      createAuthor(authorObject, uid).then((authorArray) => showAuthors(authorArray));
     }
     // FIXME:ADD CLICK EVENT FOR EDITING AN AUTHOR
     if (e.target.id.includes('update-author')) {
@@ -53,11 +54,11 @@ const formEvents = () => {
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
         email: document.querySelector('#email').value,
-        uid: '',
         favorite: document.querySelector('#favorite').checked,
+        uid,
         firebaseKey
       };
-      updateAuthor(authorObject).then(showAuthors);
+      updateAuthor(authorObject, uid).then(showAuthors);
     }
   });
 };

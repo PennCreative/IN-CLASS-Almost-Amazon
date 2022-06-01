@@ -5,9 +5,15 @@ import firebaseConfig from './apiKeys';
 const dbUrl = firebaseConfig.databaseURL;
 
 // TODO: GET BOOKS
-const getBooks = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/books.json`)
-    .then((response) => resolve(Object.values(response.data)))
+const getBooks = (uid) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/books.json?orderBy="uid"&equalTo="${uid}"`)
+    .then((response) => {
+      if (response.data) {
+        resolve(Object.values(response.data));
+      } else {
+        resolve([]);
+      }
+    })
     .catch((error) => reject(error));
 });
 
@@ -30,16 +36,16 @@ const getSingleBook = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // TODO: CREATE BOOK
-const createBook = (bookObj) => new Promise((resolve, reject) => {
+const createBook = (uid, bookObj) => new Promise((resolve, reject) => {
   // PASSING IN PAYLOAD
-  axios.post(`${dbUrl}/books.json`, bookObj)
+  axios.post(`${dbUrl}/books/${uid}.json`, bookObj)
     .then((response) => {
     // Patch also needs a payload
     // Patch is updating so it needs a payload
       const bodyPayload = { firebaseKey: response.data.name };
       axios.patch(`${dbUrl}/books/${bodyPayload.firebaseKey}.json`, bodyPayload)
         .then(() => {
-          getBooks().then(resolve);
+          getBooks(uid).then(resolve);
         });
     }).catch(reject);
 });
@@ -52,10 +58,12 @@ const updateBook = (bookObj) => new Promise((resolve, reject) => {
 });
 
 // TODO: FILTER BOOKS ON SALE
-const booksOnSale = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/books.json?orderBy="sale"&equalTo=true`)
-    .then((response) => resolve(Object.values(response.data)))
-    .catch((error) => reject(error));
+const booksOnSale = (uid) => new Promise((resolve, reject) => {
+  getBooks(uid)
+    .then((userBooks) => {
+      const favBooks = userBooks.filter((book) => book.sale);
+      resolve(favBooks);
+    }).catch((error) => reject(error));
 });
 // TODO: FILTER AUTHOR'S BOOKS
 const authorsBooks = (firebaseKey) => new Promise((resolve, reject) => {
