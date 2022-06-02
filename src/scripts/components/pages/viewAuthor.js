@@ -11,7 +11,7 @@ const viewAuthor = (obj) => {
   Author Email: <a href="mailto:${obj.email}">${obj.email}</a>
   <hr>
   <div id="authorsCollection"><div>`;
-  console.warn(viewAuthorDetails('-MiBt86VzkC-EGmJnxjm'));
+  console.warn(viewAuthorDetails);
   const bookArr = Object.values(obj.bookObject);
   let bookStr = '';
   bookArr.forEach((item) => {

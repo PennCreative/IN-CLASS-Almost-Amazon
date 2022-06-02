@@ -36,9 +36,9 @@ const getSingleBook = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // TODO: CREATE BOOK
-const createBook = (uid, bookObj) => new Promise((resolve, reject) => {
+const createBook = (bookObj, uid) => new Promise((resolve, reject) => {
   // PASSING IN PAYLOAD
-  axios.post(`${dbUrl}/books/${uid}.json`, bookObj)
+  axios.post(`${dbUrl}/books.json`, bookObj)
     .then((response) => {
     // Patch also needs a payload
     // Patch is updating so it needs a payload
@@ -51,9 +51,9 @@ const createBook = (uid, bookObj) => new Promise((resolve, reject) => {
 });
 
 // TODO: UPDATE BOOK
-const updateBook = (bookObj) => new Promise((resolve, reject) => {
+const updateBook = (bookObj, uid) => new Promise((resolve, reject) => {
   axios.patch(`${dbUrl}/books/${bookObj.firebaseKey}.json`, bookObj)
-    .then(() => getBooks().then(resolve))
+    .then(() => getBooks(uid).then(resolve))
     .catch(reject);
 });
 

@@ -1,4 +1,4 @@
-import { booksOnSale, getBooks } from '../../api/bookData';
+import { getBooks } from '../../api/bookData';
 import { showBooks } from '../components/pages/books';
 import logoutButton from '../components/buttons/logoutButton';
 import domBuilder from '../components/domBuilder';
@@ -17,7 +17,6 @@ const startApp = (user) => {
 
   // TODO: Put all books on the DOM on App load
   getBooks(user.uid).then((booksArray) => showBooks(booksArray));
-  booksOnSale().then((saleBooksArray) => showBooks(saleBooksArray));
 };
 
 export default startApp;
