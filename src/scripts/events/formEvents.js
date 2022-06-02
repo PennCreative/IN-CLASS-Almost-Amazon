@@ -8,7 +8,6 @@ const formEvents = (uid) => {
     e.preventDefault();
     // TODO: CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
     if (e.target.id.includes('submit-book')) {
-      console.warn('CLICKED SUBMIT BOOK', e.target.id);
       const bookObject = {
         title: document.querySelector('#title').value,
         image: document.querySelector('#image').value,
