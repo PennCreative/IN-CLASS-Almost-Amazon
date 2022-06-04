@@ -5,7 +5,7 @@ import selectAuthor from './selectAuthor';
 // USING THIS FORM FOR BOTH CREATE AND UPDATE
 // THIS FORM WILL BE FOR CREATING AND UPDATING
 // const addBookForm = (userId, obj = {}) => { IS WHAT THIS WILL LOOK LIKE
-const addBookForm = (uid, obj = {}) => {
+const addBookForm = (obj = {}, uid) => {
   clearDom();
   const domString = `
     <form id="${obj.firebaseKey ? `update-book--${obj.firebaseKey}` : 'submit-book'}" class="mb-4">
@@ -36,8 +36,8 @@ const addBookForm = (uid, obj = {}) => {
     </form>`;
 
   renderToDOM('#form-container', domString);
-  // selectAuthor(userId, `${obj.author_id || ''}`); IS WHAT THIS WILL LOOK LIKE
-  selectAuthor(uid, `${obj.author_id || ''}`);
+
+  selectAuthor(`${obj.author_id || ''}`, uid);
 };
 
 export default addBookForm;
