@@ -52,7 +52,10 @@ const domEvents = (uid) => {
         deleteAuthorsBooks(firebaseKey).then((authorsArray) => showAuthors(authorsArray));
       }
     }
-
+    if (e.target.id.includes('fav-author-btn')) {
+      const [, firebaseKey] = e.target.id.split('--');
+      console.warn(firebaseKey);
+    }
     // FIXME: ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('add-author-btn')) {
       addAuthorForm(uid);
